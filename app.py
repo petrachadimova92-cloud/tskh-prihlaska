@@ -1,4 +1,13 @@
 import streamlit as st
+from dotenv import load_dotenv
+import os
+from mailer import send_form_email_smtp
+
+load_dotenv()
+
+EMAIL = os.getenv("EMAIL")
+HESLO = os.getenv("HESLO")
+MUJ_EMAIL = os.getenv("MUJ_EMAIL")
 
 st.title("Registrační formulář")
 
@@ -112,8 +121,29 @@ if tlacitko_odeslat:
         st.error("Musíš vyplnit email zakonného zástupce.")
         st.stop()
  
-
-    st.write("Odesláno")
+    data = {
+        "jmeno": jmeno,
+        "prijmeni": prijmeni,
+        "vek": vek,
+        "telefoni_cislo": kontakt_1,
+        "email": kontakt_2,
+        "bydliste": bydliste,
+        "vybrane_hobby_skupiny": hobby_skupiny,
+        "vybarane_poloprofi_skupiny": poloprofi_skupiny,
+        "vybrane_profi_skupiny": profi_skupiny,
+        "jmeno_zakonneho_zastupce": jmeno_zakonneho_zastupce,
+        "prijmeni_zakonneho_zastupce": prijmeni_zakonneho_zastupce,
+        "telefoni_cislo_zakonneho_zastupce": kontakt_zakonneho_zastupce_1,
+        "email_zakonneho_zastupce": kontakt_zakonneho_zastupce_2
+    }
+    send_form_email_smtp(
+        data=data,
+        to_email=MUJ_EMAIL,
+        subject=f"Nová přihláška TSKH od {jmeno} {prijmeni}",
+        gmail_user=EMAIL,
+        gmail_app_password=HESLO
+    )
+    st.success("Odesláno")
 
 
 
