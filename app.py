@@ -88,7 +88,7 @@ profi_skupiny = st.multiselect(
 souhlas = st.checkbox("Souhlasím se zpracováním svých osobních údajů.", key="souhlas")
 
 
-tlacitko_odeslat = st.button(label = "Odeslat", disabled= not souhlas,key="tlacitko_odeslat")
+tlacitko_odeslat = st.button(label = "Odeslat", disabled= not souhlas,key="tlacitko_odeslat", width="stretch")
 if tlacitko_odeslat:
     if not jmeno: 
         st.error("Musíte vyplnit jméno.")
